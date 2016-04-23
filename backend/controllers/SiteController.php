@@ -8,7 +8,7 @@ use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
 /**
- * Site controller k
+ * Site controller
  */
 class SiteController extends Controller
 {
@@ -65,7 +65,11 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post())
+            && $model->login()
+        ) {
+//            var_dump($model->load(Yii::$app->request->post()));
+//            exit;
             return $this->goBack();
         } else {
             return $this->render('login', [

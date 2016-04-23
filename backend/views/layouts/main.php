@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'H - Team',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,6 +36,11 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Loại tin', 'url' => ['/loaitin/index']],
+        ['label' => 'Tin tức', 'url' => ['/tintuc/index']],
+        ['label' => 'Lịch tuần', 'url' => ['/sukien/index']],
+        ['label' => 'Thông báo', 'url' => ['/thongbao/index']],
+        ['label' => 'Slide', 'url' => ['/slide/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

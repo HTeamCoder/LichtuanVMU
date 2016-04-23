@@ -5,7 +5,7 @@ use Yii;
 use yii\base\Model;
 
 /**
- * Login form thanh
+ * Login form
  */
 class LoginForm extends Model
 {
