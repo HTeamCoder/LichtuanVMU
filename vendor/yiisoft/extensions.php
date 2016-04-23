@@ -57,4 +57,31 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
+  'mihaildev/yii2-ckeditor' => 
+  array (
+    'name' => 'mihaildev/yii2-ckeditor',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@mihaildev/ckeditor' => $vendorDir . '/mihaildev/yii2-ckeditor',
+    ),
+  ),
+  'kartik-v/yii2-krajee-base' => 
+  array (
+    'name' => 'kartik-v/yii2-krajee-base',
+    'version' => '1.8.4.0',
+    'alias' => 
+    array (
+      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base',
+    ),
+  ),
+  'kartik-v/yii2-widget-fileinput' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-fileinput',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput',
+    ),
+  ),
 );
