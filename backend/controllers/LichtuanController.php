@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\sukien;
 use Yii;
 use common\models\lichtuan;
 use common\models\LichtuanSearch;
@@ -94,11 +95,7 @@ class LichtuanController extends Controller
                 $arr2=array("TUẦN","TRƯỜNG","Từ ngày", "đến ngày",")");
                 $rp2=str_replace($arr2,$arr2[0],$explode[0]);
                 $ex2=explode($arr2[0],$rp2);
-//                echo $arr2[0].$ex2[1]."<br>";
-//                echo $arr2[0].$ex2[2]."<br>";
-//               echo $ex2[4]."<br>";
-//                exit;
-//                echo $arr2[2].$ex2[5];
+
 
                 $tungay = date_parse_from_format('m-d-Y',$ex2[4]);
                 $denngay = date_parse_from_format('m-d-Y',$ex2[5]);
@@ -110,48 +107,19 @@ class LichtuanController extends Controller
                 $lichtuan->tuannamtheonamhoc="Lịch Tuần".$ex2[2];
                 $lichtuan->save(false);
 
-
-
-
-
-//                for($i=0;$i<7;$i++){
-//                    $str=substr($explode[$i+1],7);
-//                    $str2=substr($explode[$i+1],0,7);
+                for($i=0;$i<7;$i++){
+                    $str=substr($explode[$i+1],7);
+                    $str2=substr($explode[$i+1],0,7);
 //                    echo nl2br($arr[$i].$str2."<br>".$str);
-//                }
 
+                    $sukien = new sukien();
+                    $sukien->thu=$arr[$i];
+                    $sukien->ngay=$str2;
+                    $sukien->noidung=$str;
+                    $sukien->lichtuan_id=$lichtuan->id;
+                    $sukien->save(false);
 
-
-                //print_r($explode);
-
-//                ///               từ ngày đến ngày
-//                $arr1 = array("(", "Từ ngày", "đến ngày", ")");
-//                $rp = str_replace($arr1, $arr1[0], $explode[0]);
-//                $ex = explode($arr1[0], $rp);
-//                $ngay = substr($explode[$i], 0, 7) . "<br>";
-//                $noidung = substr($explode[$i + 1], 7);
-//                echo $noidung
-                //echo 'Từ ngày'.$ex[2].' Đến ngày'.$ex[3]."<br>";
-                //nội dung
-//                for ($i = 0; $i <= 6; $i++) {
-//                    $ngay = substr($explode[$i], 0, 7) . "<br>";
-//                    $noidung = substr($explode[$i + 1], 7);
-//                    //$check=strip_tags($arr[$i].$ngay.$noidung);
-//
-//                    $lichtuan = new lichtuan();
-//                    $namhoc = new namhoc();
-//                    //$lichtuan->namhoc_id=$namhoc->id;
-//                    $lichtuan->tungay =$ex[2];
-//                    $lichtuan->denngay = $ex[3];
-//                    $lichtuan->namhoc_id=$_POST['lichtuan']['namhoc_id'];
-//
-//
-//                    $lichtuan->save(false);
-//                    // print_r( nl2br($check));
-//                }
-
-
-
+                }
 
             }
             return $this->redirect(['index']);

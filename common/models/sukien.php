@@ -32,7 +32,7 @@ class sukien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ngay'], 'safe'],
+            [['ngay'], 'string'],
             [['noidung'], 'string'],
             [['lichtuan_id'], 'required'],
             [['lichtuan_id'], 'integer'],
@@ -47,11 +47,11 @@ class sukien extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'thu' => Yii::t('app', 'Thu'),
-            'ngay' => Yii::t('app', 'Ngay'),
-            'thoigian' => Yii::t('app', 'Thoigian'),
-            'noidung' => Yii::t('app', 'Noidung'),
-            'lichtuan_id' => Yii::t('app', 'Lichtuan ID'),
+            'thu' => Yii::t('app', 'Thứ'),
+            'ngay' => Yii::t('app', 'Ngày Tháng'),
+            'thoigian' => Yii::t('app', 'Thời Gian'),
+            'noidung' => Yii::t('app', 'Nội Dung'),
+            'lichtuan_id' => Yii::t('app', 'Tuần Sự Kiện'),
         ];
     }
 
