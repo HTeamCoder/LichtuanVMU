@@ -41,6 +41,7 @@ AppAsset::register($this);
         ['label' => 'Lịch tuần', 'url' => ['/sukien/index']],
         ['label' => 'Thông báo', 'url' => ['/thongbao/index']],
         ['label' => 'Slide', 'url' => ['/slide/index']],
+        ['label' => 'Nhân viên', 'url' => ['/nhanvien/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

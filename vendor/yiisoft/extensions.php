@@ -84,4 +84,22 @@ return array (
       '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput',
     ),
   ),
+    'moonlandsoft/yii2-phpexcel' =>
+        array (
+            'name' => 'moonlandsoft/yii2-phpexcel',
+            'version' => '1.1.0.0',
+            'alias' =>
+                array (
+                    '@moonland/phpexcel' => $vendorDir . '/moonlandsoft/yii2-phpexcel',
+                ),
+        ),
+    'kartik-v/yii2-widget-datetimepicker' =>
+        array (
+            'name' => 'kartik-v/yii2-widget-datetimepicker',
+            'version' => '1.4.2.0',
+            'alias' =>
+                array (
+                    '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
+                ),
+        ),
 );
