@@ -17,15 +17,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'thu') ?>
-
-    <?= $form->field($model, 'ngay') ?>
-
     <?= $form->field($model, 'thoigian') ?>
 
-    <?= $form->field($model, 'noidung') ?>
+    <?= $form->field($model, 'diadiem_congviec') ?>
 
-    <?php // echo $form->field($model, 'lichtuan_id') ?>
+    <?= $form->field($model, 'chutri') ?>
+
+    <?= $form->field($model, 'khachmoi') ?>
+
+    <?php // echo $form->field($model, 'nam') ?>
+
+    <?php // echo $form->field($model, 'namhoc') ?>
+
+    <?php // echo $form->field($model, 'tuancuanam') ?>
+
+    <?php // echo $form->field($model, 'tuancuanamhoc') ?>
+
+    <?php // echo $form->field($model, 'ngaycongtac') ?>
+
+    <?php // echo $form->field($model, 'ghichu') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

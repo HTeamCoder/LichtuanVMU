@@ -5,12 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\sukien */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Sukien',
-]) . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Sukiens'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = Yii::t('app', 'Cập nhật lịch tuần: ') . ' ' . $model->thoigian;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lịch tuần'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->thoigian, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
 ?>
 <div class="sukien-update">
 

@@ -2,17 +2,15 @@
 
 namespace backend\controllers;
 
-use common\models\donvi;
-use common\models\trinhdochuyenmon;
 use Yii;
 use common\models\nhanvien;
-use common\models\nhanviensearch;
+use common\models\donvi;
+use common\models\trinhdo;
+use common\models\NhanvienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use moonland\phpexcel\Excel;
-use yii\filters\AccessControl;
 /**
  * NhanvienController implements the CRUD actions for nhanvien model.
  */
@@ -21,26 +19,11 @@ class NhanvienController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['*'],
-//                    ],
-//                ],
-//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                 ],
-
             ],
         ];
     }
@@ -51,7 +34,7 @@ class NhanvienController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new nhanviensearch();
+        $searchModel = new NhanvienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -80,10 +63,7 @@ class NhanvienController extends Controller
     public function actionCreate()
     {
         $model = new nhanvien();
-        if($model->load(Yii::$app->request->post())){
-            var_dump($model);
-            exit;
-        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -140,15 +120,12 @@ class NhanvienController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     public function actionImport(){
         $model = new nhanvien();
-
         $model->file = UploadedFile::getInstance($model,'file');
-
-
         if($model->file) {
-            $model->file->saveAs('uploads/excel/' . $model->file->name);
-            $path = 'uploads/excel/' . $model->file->name;
+            $path = $model->file->tempName;
             $data = \moonland\phpexcel\Excel::widget([
                 'mode' => 'import',
                 'fileName' => $path,
@@ -156,43 +133,35 @@ class NhanvienController extends Controller
                 'setIndexSheetByName' => false, // set this if your excel data with multiple worksheet, the index of array will be set with the sheet name. If this not set, the index will use numeric.
                 'getOnlySheet' => 'Sheet1', // you can set this property if you want to get the specified sheet from the excel data with multiple worksheet.
             ]);
-            foreach($data as $value) {
-                if (gettype($value['A'])=='double' && gettype($value['B'])=='string') {
+            foreach($data as $key=>$value) {
+                if ($key>14&&$value['A']!=null) {
                     $nhanvien = new nhanvien();
-                    $trinhdo = trinhdochuyenmon::findOne(['tentrinhdochuyenmon' => $value['E']]);
-                    if (!isset($trinhdo)) {
-                        $trinhdo = new trinhdochuyenmon();
-                        $trinhdo->tentrinhdochuyenmon = $value['E'];
+                    if($value['E']!=null)
+                    $trinhdo = trinhdo::findOne(['tentrinhdo' => $value['E']]);
+                    if (is_null($trinhdo)) {
+                        $trinhdo = new trinhdo();
+                        $trinhdo->tentrinhdo = $value['E'];
                         $trinhdo->save();
-                        $nhanvien->trinhdochuyenmon_id = $trinhdo->id;
                     }
+                    if($value['G']!=null)
                     $donvi = donvi::findOne(['tendonvi' => $value['G']]);
-                    if (!isset($donvi)) {
+                    if (is_null($donvi)) {
                         $donvi = new donvi();
                         $donvi->tendonvi = $value['G'];
                         $donvi->save();
-                        $nhanvien->donvi_id = $donvi->id;
                     }
                     $nhanvien->ten = $value['B'];
                     $nhanvien->donvi_id = $donvi->id;
-                    $nhanvien->trinhdochuyenmon_id = $trinhdo->id;
-
-                    if (isset($value['C'])) {
-                        $namsinh = substr($value['C'],6,2);
-                        $ngaysinh = substr($value['C'],0,2);
-                        $thangsinh = substr($value['C'],3,2);
-                        $nhanvien->ngaysinh = '19'.$namsinh.'-'.$ngaysinh.'-'.$thangsinh;
-                        $nhanvien->gioitinh = 1;
-                    } else {
-                        $namsinh = substr($value['D'],6,2);
-                        $ngaysinh = substr($value['D'],0,2);
-                        $thangsinh = substr($value['D'],3,2);
-                        $nhanvien->ngaysinh ='19'.$namsinh.'-'.$ngaysinh.'-'.$thangsinh;
-                        $nhanvien->gioitinh = 0;
-                    }
+                    $nhanvien->trinhdo_id = $trinhdo->id;
+                    $nhanvien->ngaysinh = (is_null($value['C']))?date('Y-m-d',strtotime(str_replace('-','/',$this->convert_date($value['D'])))):date('Y-m-d',strtotime(str_replace('-','/',$this->convert_date($value['C']))));
+                    $nhanvien->ngach = $value['F'];
+                    $nhanvien->ghichu = $value['I'];
+                    $nhanvien->hesoluong = $value['H'];
+                    $nhanvien->gioitinh = (is_null($value['C']))?'nu':'nam';
                     $nhanvien->save();
                 }
             }
+            \Yii::$app->session->addFlash('success', 'Import file dữ liệu thành công');
             return $this->redirect(['index', 'id' => $model->id]);
         }
         else {
@@ -201,4 +170,20 @@ class NhanvienController extends Controller
             ]);
         }
     }
+    private function convert_date($date)
+    {
+        $datebegin = substr($date, 0,6);
+        $dateend = substr($date, 6,2);
+        $yn=date("y");
+        if ($dateend > $yn && $dateend < 100)   
+        {
+            $year2=19;
+        }
+        elseif ($dateend <= $yn)
+        {
+            $year2=20;
+        }
+        return $datebegin.$year2.$dateend;
+    }
 }
+

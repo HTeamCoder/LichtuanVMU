@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\nhanviensearch */
+/* @var $searchModel common\models\NhanvienSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Danh sách nhân viên';
+$this->title = Yii::t('app', 'Quản lý cán bộ');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-index">
@@ -16,52 +16,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Thêm nhân viên', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Import', ['import'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Thêm mới cán bộ'), ['create'], ['class' => 'btn btn-success']) ?>
+         <?= Html::a(Yii::t('app', 'Import cán bộ'), ['import'], ['class' => 'btn btn-primary']) ?>
     </p>
-
+            
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'summary' => "Hiển thị <strong>{begin}</strong> -> <strong>{end}</strong> của <strong>{count}</strong> cán bộ",
+        'emptyText'=>'<p class="text-center"><strong class="text-danger">Không tìm thấy kết quả nào</strong></p>',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-//            'id',
             'ten',
             'ngaysinh',
-            [
-                'attribute'=>'gioitinh',
-                'value'=>function($data){
-                    return $data->gioitinh==1?'Nam':'Nữ';
-                },
-                'filter' => Html::activeDropDownList($searchModel,'gioitinh',\yii\helpers\ArrayHelper::map([
-                    ['id' => '1', 'name' => 'Nam'], ['id' => '0', 'name' => 'Nữ'],
-                ],'id','name'),['prompt' => 'Tất cả','class' => 'form-control']),
-            ],
-            [
-                'attribute'=>'donvi_id',
-                'value'=>function($data){
-                    return $data->donvi->tendonvi;
-                },
-                'filter'=>Html::activeDropDownList($searchModel,'donvi_id',\yii\helpers\ArrayHelper::map(\common\models\donvi::find()->all(),'id','tendonvi'),['prompt'=>'Chọn đơn vị','class'=>'form-control'])
-
-            ],
-            [
-                'attribute'=>'trinhdochuyenmon_id',
-                'value'=>function($data){
-                    return $data->trinhdochuyenmon->tentrinhdochuyenmon;
-                },
-                'filter'=>Html::activeDropDownList($searchModel,'trinhdochuyenmon_id',\yii\helpers\ArrayHelper::map(\common\models\trinhdochuyenmon::find()->all(),'id','tentrinhdochuyenmon'),['prompt'=>'Chọn trình độ','class'=>'form-control'])
-
-            ],
-            'username',
-            'password_hash',
+            'gioitinh',
+            'ngach',
+            'hesoluong',
+            // 'ghichu',
+            // 'username',
+            // 'password_hash',
             // 'password_reset_token',
             // 'auth_key',
             // 'status',
             // 'created_at',
             // 'updated_at',
-
+            // 'donvi_id',
+            // 'trinhdo_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

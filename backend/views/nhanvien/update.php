@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\nhanvien */
 
-$this->title = 'Sửa thông tin: ' . ' ' . $model->ten;
-$this->params['breadcrumbs'][] = ['label' => 'Danh sách nhân viên', 'url' => ['index']];
+$this->title = Yii::t('app', 'Cập nhật cán bộ : ') . ' ' . $model->ten;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Cán bộ'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ten, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Sửa';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
 ?>
 <div class="nhanvien-update">
 

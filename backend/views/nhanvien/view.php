@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\nhanvien */
 
 $this->title = $model->ten;
-$this->params['breadcrumbs'][] = ['label' => 'Danh sách nhân viên', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Cán bộ'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nhanvien-view">
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Sửa', ['update', 'id' => $model->ten], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Xóa', ['delete', 'id' => $model->ten], [
+        <?= Html::a(Yii::t('app', 'Cập nhật'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Xóa bỏ'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => Yii::t('app', 'Bạn có chắc chắn muốn xóa cán bộ '.$model->ten.' này không ?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,30 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-//            'id',
+            'id',
             'ten',
             'ngaysinh',
-            [
-                'attribute'=>'gioitinh',
-                'value'=>$model->gioitinh==1?'Nam':'Nữ',
-            ],
-
-//            'password_reset_token',
-//            'auth_key',
-//            'status',
-//            'created_at',
-//            'updated_at',
-            [
-                'attribute'=>'donvi_id',
-                'value'=>$model->donvi->tendonvi,
-
-            ],
-            [
-                'attribute'=>'trinhdochuyenmon_id',
-                'value'=>$model->trinhdochuyenmon->tentrinhdochuyenmon,
-            ],
+            'gioitinh',
+            'ngach',
+            'hesoluong',
+            'ghichu',
             'username',
             'password_hash',
+            'password_reset_token',
+            'auth_key',
+            'status',
+            'created_at',
+            'updated_at',
+            'donvi_id',
+            'trinhdo_id',
         ],
     ]) ?>
 

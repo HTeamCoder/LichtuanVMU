@@ -39,9 +39,9 @@ AppAsset::register($this);
         ['label' => 'Loại tin', 'url' => ['/loaitin/index']],
         ['label' => 'Tin tức', 'url' => ['/tintuc/index']],
         ['label' => 'Lịch tuần', 'url' => ['/sukien/index']],
+        ['label' => 'Cán bộ', 'url' => ['/nhanvien/index']],
         ['label' => 'Thông báo', 'url' => ['/thongbao/index']],
         ['label' => 'Slide', 'url' => ['/slide/index']],
-        ['label' => 'Nhân viên', 'url' => ['/nhanvien/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -73,7 +73,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; H-Team <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

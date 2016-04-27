@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
+use common\components\read;
 use common\models\sukien;
+use common\models\tuan;
 use common\models\SukienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
  * SukienController implements the CRUD actions for sukien model.
  */
@@ -61,9 +63,33 @@ class SukienController extends Controller
     public function actionCreate()
     {
         $model = new sukien();
+        $model->file = UploadedFile::getInstance($model,'file');
+        if ($model->file) {
+            $word = new read();
+            $thoigians =  $word->toHTML($model->file->tempName);
+            $tuan = $word->toText($model->file->tempName);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $tuancongtac = new tuan();
+            $tuancongtac->tuannam = $tuan['tuannam'];
+            $tuancongtac->tuannamhoc = $tuan['tuannamhoc'];
+            $tuancongtac->tungay = $tuan['tungay'];
+            $tuancongtac->denngay = $tuan['denngay'];
+            $tuancongtac->save();
+
+            foreach ($thoigians as $key => $value) {
+                if ($key!='ghichu')
+                {
+                    $sukien = new sukien();
+                    $sukien->thoigian = $value['ngay'];
+                    $sukien->thoidiem = $value['thoigian'];
+                    $sukien->diadiem_congviec = $value['noidung'];
+                    $sukien->ghichu = $thoigians['ghichu']['ghichu'];
+                    $sukien->tuan_id = $tuancongtac->id;
+                    $sukien->save(false);
+                }
+            }
+            \Yii::$app->session->addFlash('success', 'Import file dữ liệu thành công');
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

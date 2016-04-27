@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\SukienSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Sukiens');
+$this->title = Yii::t('app', 'Quản lý lịch tuần');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sukien-index">
@@ -16,21 +16,62 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Sukien'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Import lịch tuần'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'summary' => "Hiển thị <strong>{begin}</strong> -> <strong>{end}</strong> của <strong>{count}</strong> lịch tuần",
+        'emptyText'=>'<p class="text-center"><strong class="text-danger">Không tìm thấy kết quả nào</strong></p>',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'thu',
-            'ngay',
-            'thoigian',
-            'noidung:ntext',
-            // 'lichtuan_id',
+            [
+                'attribute'=>'tuan_id',
+                'value'=>function ($model)
+                {
+                    return $model->tuan->tuannam;
+                },
+                'label'=>'Lịch tuần theo năm',
+                'filter'=>Html::activeDropDownList($searchModel,'tuan_id',\yii\helpers\ArrayHelper::map(\common\models\tuan::find()->all(),'id','tuannam'
+                ),['prompt' => 'Tất cả','class' => 'form-control'])
+            ],
+            [
+                'attribute'=>'tuan_id',
+                'value'=>function ($model)
+                {
+                    return $model->tuan->tuannamhoc;
+                },
+                'label'=>'Lịch tuần theo năm học',
+                'filter'=>Html::activeDropDownList($searchModel,'tuan_id',\yii\helpers\ArrayHelper::map(\common\models\tuan::find()->all(),'id','tuannamhoc'
+                ),['prompt' => 'Tất cả','class' => 'form-control'])
+            ],
+            [
+                'attribute'=>'thoigian',
+                'value'=>function($model)
+                {
+                    return $model->thoigian;
+                },
+                'filter'=>false,
+            ],
+            [
+                 'attribute'=>'thoidiem',
+                'value'=>function ($model)
+                {
+                    return $model->thoidiem;
+                },
+                'label'=>'Thời gian',
+                'filter'=>true
+            ],
+            [
+                'attribute'=>'diadiem_congviec',
+                'value'=>function($model)
+                {
+                    return $model->diadiem_congviec;
+                },
+                'filter'=>false,
+                'format'=>'html'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

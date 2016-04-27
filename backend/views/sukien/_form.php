@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\file\FileInput;
 /* @var $this yii\web\View */
 /* @var $model common\models\sukien */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,20 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="sukien-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'thu')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ngay')->textInput() ?>
-
-    <?= $form->field($model, 'thoigian')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'noidung')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'lichtuan_id')->textInput() ?>
+    
+    <?= $form->field($model,'file')->widget(FileInput::classname()); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Import') : Yii::t('app', 'Cập nhật'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

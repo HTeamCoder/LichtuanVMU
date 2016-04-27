@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\nhanviensearch */
+/* @var $model common\models\NhanvienSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -23,7 +23,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'gioitinh') ?>
 
-    <?= $form->field($model, 'username') ?>
+    <?= $form->field($model, 'ngach') ?>
+
+    <?php // echo $form->field($model, 'hesoluong') ?>
+
+    <?php // echo $form->field($model, 'ghichu') ?>
+
+    <?php // echo $form->field($model, 'username') ?>
 
     <?php // echo $form->field($model, 'password_hash') ?>
 
@@ -39,11 +45,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'donvi_id') ?>
 
-    <?php // echo $form->field($model, 'trinhdochuyenmon_id') ?>
+    <?php // echo $form->field($model, 'trinhdo_id') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
