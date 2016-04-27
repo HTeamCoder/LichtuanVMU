@@ -5,12 +5,15 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "nhanvien".
+ * This is the model class for table "{{%nhanvien}}".
  *
  * @property integer $id
  * @property string $ten
  * @property string $ngaysinh
- * @property integer $gioitinh
+ * @property string $gioitinh
+ * @property string $ngach
+ * @property string $hesoluong
+ * @property string $ghichu
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
@@ -19,10 +22,10 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $donvi_id
- * @property integer $trinhdochuyenmon_id
+ * @property integer $trinhdo_id
  *
  * @property Donvi $donvi
- * @property Trinhdochuyenmon $trinhdochuyenmon
+ * @property Trinhdo $trinhdo
  */
 class nhanvien extends \yii\db\ActiveRecord
 {
@@ -32,7 +35,7 @@ class nhanvien extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'nhanvien';
+        return '{{%nhanvien}}';
     }
 
     /**
@@ -41,10 +44,13 @@ class nhanvien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ten', 'donvi_id', 'trinhdochuyenmon_id'], 'required'],
-            [['gioitinh', 'status', 'created_at', 'updated_at', 'donvi_id', 'trinhdochuyenmon_id'], 'integer'],
-            [['ten', 'ngaysinh', 'username', 'password_hash', 'password_reset_token', 'auth_key'], 'string', 'max' => 100],
-            [['file'],'file','extensions'=>'xls,xlsx','maxSize'=>1024*1024],
+            [['ngaysinh'], 'safe'],
+            [['gioitinh'], 'string'],
+            [['status', 'created_at', 'updated_at', 'donvi_id', 'trinhdo_id'], 'integer'],
+            [['donvi_id', 'trinhdo_id'], 'required'],
+            [['ten', 'username', 'password_hash', 'password_reset_token', 'auth_key'], 'string', 'max' => 100],
+            [['ngach', 'hesoluong', 'ghichu'], 'string', 'max' => 45],
+            [['file'],'file']
         ];
     }
 
@@ -54,19 +60,22 @@ class nhanvien extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'ten' => 'Tên',
-            'ngaysinh' => 'Ngày sinh',
-            'gioitinh' => 'Giới tính',
-            'username' => 'Username',
-            'password_hash' => 'Password',
-            'password_reset_token' => 'Password Reset Token',
-            'auth_key' => 'Auth Key',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'donvi_id' => 'Đơn vị',
-            'trinhdochuyenmon_id' => 'Trình độ chuyên môn',
+            'id' => Yii::t('app', 'ID'),
+            'ten' => Yii::t('app', 'Họ và tên'),
+            'ngaysinh' => Yii::t('app', 'Ngày sinh'),
+            'gioitinh' => Yii::t('app', 'Giới tính'),
+            'ngach' => Yii::t('app', 'Ngạch'),
+            'hesoluong' => Yii::t('app', 'Hệ số lương'),
+            'ghichu' => Yii::t('app', 'Ghi chú'),
+            'username' => Yii::t('app', 'Username'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'donvi_id' => Yii::t('app', 'Donvi ID'),
+            'trinhdo_id' => Yii::t('app', 'Trinhdo ID'),
         ];
     }
 
@@ -81,9 +90,9 @@ class nhanvien extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTrinhdochuyenmon()
+    public function getTrinhdo()
     {
-        return $this->hasOne(Trinhdochuyenmon::className(), ['id' => 'trinhdochuyenmon_id']);
+        return $this->hasOne(Trinhdo::className(), ['id' => 'trinhdo_id']);
     }
 
     /**

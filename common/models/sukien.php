@@ -5,25 +5,26 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "sukien".
+ * This is the model class for table "{{%sukien}}".
  *
  * @property integer $id
- * @property string $thu
- * @property string $ngay
  * @property string $thoigian
- * @property string $noidung
- * @property integer $lichtuan_id
+ * @property string $diadiem_congviec
+ * @property string $thoidiem
+ * @property string $ghichu
+ * @property integer $tuan_id
  *
- * @property Lichtuan $lichtuan
+ * @property Tuan $tuan
  */
 class sukien extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'sukien';
+        return '{{%sukien}}';
     }
 
     /**
@@ -32,11 +33,11 @@ class sukien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ngay'], 'string'],
-            [['noidung'], 'string'],
-            [['lichtuan_id'], 'required'],
-            [['lichtuan_id'], 'integer'],
-            [['thu', 'thoigian'], 'string', 'max' => 45]
+            [['diadiem_congviec', 'ghichu'], 'string'],
+            [['tuan_id'], 'required'],
+            [['tuan_id'], 'integer'],
+            [['thoigian', 'thoidiem'], 'string', 'max' => 45],
+            [['file'],'file']
         ];
     }
 
@@ -47,20 +48,20 @@ class sukien extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'thu' => Yii::t('app', 'Thứ'),
-            'ngay' => Yii::t('app', 'Ngày Tháng'),
-            'thoigian' => Yii::t('app', 'Thời Gian'),
-            'noidung' => Yii::t('app', 'Nội Dung'),
-            'lichtuan_id' => Yii::t('app', 'Tuần Sự Kiện'),
+            'thoigian' => Yii::t('app', 'Ngày công tác'),
+            'diadiem_congviec' => Yii::t('app', 'Địa điểm và Nội dung'),
+            'thoidiem' => Yii::t('app', 'Thời gian'),
+            'ghichu' => Yii::t('app', 'Ghi chú'),
+            'tuan_id' => Yii::t('app', 'Tuan ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLichtuan()
+    public function getTuan()
     {
-        return $this->hasOne(Lichtuan::className(), ['id' => 'lichtuan_id']);
+        return $this->hasOne(Tuan::className(), ['id' => 'tuan_id']);
     }
 
     /**

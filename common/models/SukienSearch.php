@@ -18,8 +18,8 @@ class SukienSearch extends sukien
     public function rules()
     {
         return [
-            [['id', 'lichtuan_id'], 'integer'],
-            [['thu', 'ngay', 'thoigian', 'noidung'], 'safe'],
+            [['id'], 'integer'],
+            [['thoigian', 'diadiem_congviec','tuan_id','ghichu','thoidiem'], 'safe'],
         ];
     }
 
@@ -57,13 +57,12 @@ class SukienSearch extends sukien
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'ngay' => $this->ngay,
-            'lichtuan_id' => $this->lichtuan_id,
+            'thoigian' => $this->thoigian,
+            'tuan_id'=>$this->tuan_id,
         ]);
 
-        $query->andFilterWhere(['like', 'thu', $this->thu])
-            ->andFilterWhere(['like', 'thoigian', $this->thoigian])
-            ->andFilterWhere(['like', 'noidung', $this->noidung]);
+        $query->andFilterWhere(['like', 'diadiem_congviec', $this->diadiem_congviec])
+            ->andFilterWhere(['like', 'thoidiem', $this->thoidiem]);
 
         return $dataProvider;
     }
