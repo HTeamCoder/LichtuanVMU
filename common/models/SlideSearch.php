@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\sukien;
+use common\models\slide;
 
 /**
- * SukienSearch represents the model behind the search form about `common\models\sukien`.
+ * slidesearch represents the model behind the search form about `common\models\slide`.
  */
-class SukienSearch extends Sukien
+class slidesearch extends slide
 {
     /**
      * @inheritdoc
@@ -18,8 +18,9 @@ class SukienSearch extends Sukien
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['thoigian', 'diadiem_congviec','tuan_id','ghichu','thoidiem'], 'safe'],
+            [['id', 'donvi_id'], 'integer'],
+            [['tieude','active'], 'safe'],
+            [['thoigianhienthi'], 'number'],
         ];
     }
 
@@ -41,7 +42,12 @@ class SukienSearch extends Sukien
      */
     public function search($params)
     {
-        $query = sukien::find()->orderBy('tuan_id DESC');
+        if(Yii::$app->user->identity->roles == 'admin') {
+            $query = slide::find();
+        }
+        else{
+            $query = slide::find()->where(['donvi_id'=>Yii::$app->user->identity->donvi_id])->orderBy('id DESC');
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -50,19 +56,17 @@ class SukienSearch extends Sukien
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'thoigian' => $this->thoigian,
-            'tuan_id'=>$this->tuan_id,
+            'donvi_id' => $this->donvi_id,
+            'thoigianhienthi' => $this->thoigianhienthi,
+            'active' => $this->active,
         ]);
 
-        $query->andFilterWhere(['like', 'diadiem_congviec', $this->diadiem_congviec])
-            ->andFilterWhere(['like', 'thoidiem', $this->thoidiem]);
+        $query->andFilterWhere(['like', 'tieude', $this->tieude]);
 
         return $dataProvider;
     }

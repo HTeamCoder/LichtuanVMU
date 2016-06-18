@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\sukien;
+use common\models\tuan;
 
 /**
- * SukienSearch represents the model behind the search form about `common\models\sukien`.
+ * TuanSearch represents the model behind the search form about `common\models\tuan`.
  */
-class SukienSearch extends Sukien
+class TuanSearch extends tuan
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class SukienSearch extends Sukien
     {
         return [
             [['id'], 'integer'],
-            [['thoigian', 'diadiem_congviec','tuan_id','ghichu','thoidiem'], 'safe'],
+            [['tuannam', 'tuannamhoc', 'tungay', 'denngay'], 'safe'],
         ];
     }
 
@@ -41,10 +41,13 @@ class SukienSearch extends Sukien
      */
     public function search($params)
     {
-        $query = sukien::find()->orderBy('tuan_id DESC');
+        $query = tuan::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -57,12 +60,12 @@ class SukienSearch extends Sukien
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'thoigian' => $this->thoigian,
-            'tuan_id'=>$this->tuan_id,
         ]);
 
-        $query->andFilterWhere(['like', 'diadiem_congviec', $this->diadiem_congviec])
-            ->andFilterWhere(['like', 'thoidiem', $this->thoidiem]);
+        $query->andFilterWhere(['like', 'tuannam', $this->tuannam])
+            ->andFilterWhere(['like', 'tuannamhoc', $this->tuannamhoc])
+            ->andFilterWhere(['like', 'tungay', $this->tungay])
+            ->andFilterWhere(['like', 'denngay', $this->denngay]);
 
         return $dataProvider;
     }

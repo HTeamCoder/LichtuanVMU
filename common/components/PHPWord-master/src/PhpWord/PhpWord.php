@@ -313,8 +313,10 @@ class PhpWord
 
         $writer->save($filename);
 
-        return true;
+        return $filename;
     }
+
+
 
     /**
      * Create new section

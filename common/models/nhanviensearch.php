@@ -10,7 +10,7 @@ use common\models\nhanvien;
 /**
  * NhanvienSearch represents the model behind the search form about `common\models\nhanvien`.
  */
-class NhanvienSearch extends nhanvien
+class NhanvienSearch extends Nhanvien
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class NhanvienSearch extends nhanvien
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at', 'donvi_id', 'trinhdo_id'], 'integer'],
-            [['ten', 'ngaysinh', 'gioitinh', 'ngach', 'hesoluong', 'ghichu', 'username', 'password_hash', 'password_reset_token', 'auth_key'], 'safe'],
+            [['id','donvi_id', 'trinhdo_id'], 'integer'],
+            [['ten', 'ngaysinh', 'gioitinh', 'ngach', 'hesoluong', 'ghichu','roles','username'], 'safe'],
         ];
     }
 
@@ -41,7 +41,13 @@ class NhanvienSearch extends nhanvien
      */
     public function search($params)
     {
-        $query = nhanvien::find();
+         if(Yii::$app->user->identity->roles == 'admin') {
+            $query = nhanvien::find()->where('hesoluong > :hsl', [':hsl' => 0]);
+        }
+        else{
+            $query = nhanvien::find()->where(['donvi_id'=>Yii::$app->user->identity->donvi_id])->andWhere('hesoluong > :hsl', [':hsl' => 0]);
+        }
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,9 +64,6 @@ class NhanvienSearch extends nhanvien
         $query->andFilterWhere([
             'id' => $this->id,
             'ngaysinh' => $this->ngaysinh,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'donvi_id' => $this->donvi_id,
             'trinhdo_id' => $this->trinhdo_id,
         ]);
@@ -69,11 +72,31 @@ class NhanvienSearch extends nhanvien
             ->andFilterWhere(['like', 'gioitinh', $this->gioitinh])
             ->andFilterWhere(['like', 'ngach', $this->ngach])
             ->andFilterWhere(['like', 'hesoluong', $this->hesoluong])
-            ->andFilterWhere(['like', 'ghichu', $this->ghichu])
-            ->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key]);
+            ->andFilterWhere(['like', 'ghichu', $this->ghichu]);
+
+        return $dataProvider;
+    }
+    public function search_user($params)
+    {
+       $query = (Yii::$app->user->identity->roles == 'admin')?nhanvien::find()->where(['not', ['username' => NULL]]):nhanvien::find()->where(['not', ['username' => NULL,'username'=>'admin']])->andWhere(['donvi_id'=>Yii::$app->user->identity->donvi_id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'roles' => $this->roles,
+            'donvi_id' => $this->donvi_id,
+            'trinhdo_id' => $this->trinhdo_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'ten', $this->ten])
+            ->andFilterWhere(['like', 'username', $this->username]);
 
         return $dataProvider;
     }

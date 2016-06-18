@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\sukien;
+use common\models\thongbao;
 
 /**
- * SukienSearch represents the model behind the search form about `common\models\sukien`.
+ * ThongbaoSearch represents the model behind the search form about `common\models\Thongbao`.
  */
-class SukienSearch extends Sukien
+class ThongbaoSearch extends Thongbao
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SukienSearch extends Sukien
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['thoigian', 'diadiem_congviec','tuan_id','ghichu','thoidiem'], 'safe'],
+            [['id', 'donvi_id'], 'integer'],
+            [['noidung','active'], 'safe'],
         ];
     }
 
@@ -41,10 +41,18 @@ class SukienSearch extends Sukien
      */
     public function search($params)
     {
-        $query = sukien::find()->orderBy('tuan_id DESC');
+        if(Yii::$app->user->identity->roles == 'admin') {
+            $query = thongbao::find();
+        }
+        else{
+            $query = thongbao::find()->where(['donvi_id'=>Yii::$app->user->identity->donvi_id])->orderBy('id DESC');
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -57,12 +65,11 @@ class SukienSearch extends Sukien
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'thoigian' => $this->thoigian,
-            'tuan_id'=>$this->tuan_id,
+            'donvi_id' => $this->donvi_id,
+            'active'=>$this->active,
         ]);
 
-        $query->andFilterWhere(['like', 'diadiem_congviec', $this->diadiem_congviec])
-            ->andFilterWhere(['like', 'thoidiem', $this->thoidiem]);
+        $query->andFilterWhere(['like', 'noidung', $this->noidung]);
 
         return $dataProvider;
     }

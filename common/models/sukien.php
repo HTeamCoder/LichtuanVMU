@@ -34,10 +34,10 @@ class sukien extends \yii\db\ActiveRecord
     {
         return [
             [['diadiem_congviec', 'ghichu'], 'string'],
-            [['tuan_id'], 'required'],
+            [['tuan_id','diadiem_congviec'], 'required'],
             [['tuan_id'], 'integer'],
             [['thoigian', 'thoidiem'], 'string', 'max' => 45],
-            [['file'],'file']
+            [['file'],'file','skipOnEmpty' => false, 'extensions' => 'docx, doc']
         ];
     }
 
@@ -61,7 +61,7 @@ class sukien extends \yii\db\ActiveRecord
      */
     public function getTuan()
     {
-        return $this->hasOne(Tuan::className(), ['id' => 'tuan_id']);
+        return $this->hasOne(tuan::className(), ['id' => 'tuan_id']);
     }
 
     /**

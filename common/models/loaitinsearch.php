@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\sukien;
+use common\models\loaitin;
 
 /**
- * SukienSearch represents the model behind the search form about `common\models\sukien`.
+ * loaitinsearch represents the model behind the search form about `common\models\loaitin`.
  */
-class SukienSearch extends Sukien
+class loaitinsearch extends loaitin
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class SukienSearch extends Sukien
     {
         return [
             [['id'], 'integer'],
-            [['thoigian', 'diadiem_congviec','tuan_id','ghichu','thoidiem'], 'safe'],
+            [['tenloai'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SukienSearch extends Sukien
      */
     public function search($params)
     {
-        $query = sukien::find()->orderBy('tuan_id DESC');
+        $query = loaitin::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,12 +57,9 @@ class SukienSearch extends Sukien
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'thoigian' => $this->thoigian,
-            'tuan_id'=>$this->tuan_id,
         ]);
 
-        $query->andFilterWhere(['like', 'diadiem_congviec', $this->diadiem_congviec])
-            ->andFilterWhere(['like', 'thoidiem', $this->thoidiem]);
+        $query->andFilterWhere(['like', 'tenloai', $this->tenloai]);
 
         return $dataProvider;
     }

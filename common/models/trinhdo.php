@@ -5,21 +5,21 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "donvi".
+ * This is the model class for table "{{%trinhdo}}".
  *
  * @property integer $id
- * @property string $tendonvi
+ * @property string $tentrinhdo
  *
  * @property Nhanvien[] $nhanviens
  */
-class donvi extends \yii\db\ActiveRecord
+class trinhdo extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'donvi';
+        return '{{%trinhdo}}';
     }
 
     /**
@@ -28,7 +28,7 @@ class donvi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tendonvi'], 'string', 'max' => 100]
+            [['tentrinhdo'], 'string', 'max' => 100]
         ];
     }
 
@@ -38,8 +38,8 @@ class donvi extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'tendonvi' => 'Tendonvi',
+            'id' => Yii::t('app', 'ID'),
+            'tentrinhdo' => Yii::t('app', 'Tentrinhdo'),
         ];
     }
 
@@ -48,15 +48,15 @@ class donvi extends \yii\db\ActiveRecord
      */
     public function getNhanviens()
     {
-        return $this->hasMany(nhanvien::className(), ['donvi_id' => 'id']);
+        return $this->hasMany(nhanvien::className(), ['trinhdo_id' => 'id']);
     }
 
     /**
      * @inheritdoc
-     * @return DonviQuery the active query used by this AR class.
+     * @return TrinhdoQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new DonviQuery(get_called_class());
+        return new TrinhdoQuery(get_called_class());
     }
 }

@@ -27,9 +27,11 @@ use Yii;
  * @property Donvi $donvi
  * @property Trinhdo $trinhdo
  */
-class nhanvien extends \yii\db\ActiveRecord
+class Nhanvien extends \yii\db\ActiveRecord
 {
     public $file;
+    public $password_hash_confirm;
+    public $password;
     /**
      * @inheritdoc
      */
@@ -46,11 +48,15 @@ class nhanvien extends \yii\db\ActiveRecord
         return [
             [['ngaysinh'], 'safe'],
             [['gioitinh'], 'string'],
-            [['status', 'created_at', 'updated_at', 'donvi_id', 'trinhdo_id'], 'integer'],
+            [['donvi_id', 'trinhdo_id'], 'integer'],
+            [['roles'],'required'],
             [['donvi_id', 'trinhdo_id'], 'required'],
-            [['ten', 'username', 'password_hash', 'password_reset_token', 'auth_key'], 'string', 'max' => 100],
+            [['ten'], 'string', 'max' => 100],
             [['ngach', 'hesoluong', 'ghichu'], 'string', 'max' => 45],
-            [['file'],'file']
+            [['file'],'file'],
+            [['password_hash_confirm'],'compare', 'compareAttribute' => 'password'],
+            [['password','password_hash_confirm'],'required'],
+            [['password','password_hash_confirm'],'string','min'=>6]
         ];
     }
 
@@ -67,15 +73,10 @@ class nhanvien extends \yii\db\ActiveRecord
             'ngach' => Yii::t('app', 'Ngạch'),
             'hesoluong' => Yii::t('app', 'Hệ số lương'),
             'ghichu' => Yii::t('app', 'Ghi chú'),
-            'username' => Yii::t('app', 'Username'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
-            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'donvi_id' => Yii::t('app', 'Donvi ID'),
-            'trinhdo_id' => Yii::t('app', 'Trinhdo ID'),
+            'donvi_id' => Yii::t('app', 'Đơn vị'),
+            'trinhdo_id' => Yii::t('app', 'Trình độ'),
+            'password'=>Yii::t('app', 'Mật khẩu mới'),
+            'password_hash_confirm'=>Yii::t('app', 'Nhập lại mật khẩu mới'),
         ];
     }
 
@@ -84,7 +85,7 @@ class nhanvien extends \yii\db\ActiveRecord
      */
     public function getDonvi()
     {
-        return $this->hasOne(Donvi::className(), ['id' => 'donvi_id']);
+        return $this->hasOne(donvi::className(), ['id' => 'donvi_id']);
     }
 
     /**
@@ -92,7 +93,7 @@ class nhanvien extends \yii\db\ActiveRecord
      */
     public function getTrinhdo()
     {
-        return $this->hasOne(Trinhdo::className(), ['id' => 'trinhdo_id']);
+        return $this->hasOne(trinhdo::className(), ['id' => 'trinhdo_id']);
     }
 
     /**
@@ -102,5 +103,11 @@ class nhanvien extends \yii\db\ActiveRecord
     public static function find()
     {
         return new NhanvienQuery(get_called_class());
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->ngaysinh = date('Y-m-d',strtotime($this->ngaysinh));
+        return parent::beforeSave($insert);
     }
 }
