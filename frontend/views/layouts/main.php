@@ -28,12 +28,12 @@ AppAsset::register($this);
             <div class="row">
                 <div class="col-md-7" id="logo">
                     <div class="header text-center">
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-md-pull-2">
                           <div class="navbar-header" style="float:none;">
                             <img src="<?php echo Yii::$app->request->baseUrl;?>/img/logo.png" width="80" height="80" alt="">
                           </div>
                         </div>
-                        <div class="collapse navbar-collapse col-md-10" id="info-banner">
+                        <div class="collapse navbar-collapse col-md-10 col-md-pull-2" id="info-banner">
                             <h3>TRƯỜNG ĐẠI HỌC HÀNG HẢI VIỆT NAM</h3>
                             <h3 class="text-left">BẢNG THÔNG TIN ĐIỆN TỬ</h3>
                         </div>
