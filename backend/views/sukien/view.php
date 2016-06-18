@@ -16,13 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Cập nhật'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Xóa bỏ'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Bạn có chắc chắn muốn xóa lịch tuần '.$model->thoigian.' này không ?'),
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <?= DetailView::widget([
@@ -31,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'thoigian',
             'diadiem_congviec:html',
-            'ghichu:html',
         ],
     ]) ?>
 

@@ -8,7 +8,6 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Cập nhật cán bộ : ') . ' ' . $model->ten;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Cán bộ'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ten, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Cập nhật');
 ?>
 <div class="nhanvien-update">
 

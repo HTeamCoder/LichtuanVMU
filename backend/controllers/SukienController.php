@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 /**
  * SukienController implements the CRUD actions for sukien model.
  */
@@ -18,7 +19,16 @@ class SukienController extends Controller
 {
     public function behaviors()
     {
-        return [
+       return [
+         'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -68,7 +78,11 @@ class SukienController extends Controller
             $word = new read();
             $thoigians =  $word->toHTML($model->file->tempName);
             $tuan = $word->toText($model->file->tempName);
-
+             if (!(is_null(tuan::findOne(['tuannamhoc'=>$tuan['tuannamhoc'],'tuannam'=>$tuan['tuannam']]))))
+             {
+                 \Yii::$app->session->addFlash('warning', 'Lịch <strong>'.$tuan['tuannamhoc'].'</strong> đã tồn tại và không thể import thêm');
+                return $this->redirect(['index']);
+             }
             $tuancongtac = new tuan();
             $tuancongtac->tuannam = $tuan['tuannam'];
             $tuancongtac->tuannamhoc = $tuan['tuannamhoc'];
@@ -107,7 +121,7 @@ class SukienController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

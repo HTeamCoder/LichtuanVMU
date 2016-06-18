@@ -25,28 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ngach') ?>
 
-    <?php // echo $form->field($model, 'hesoluong') ?>
-
-    <?php // echo $form->field($model, 'ghichu') ?>
-
-    <?php // echo $form->field($model, 'username') ?>
-
-    <?php // echo $form->field($model, 'password_hash') ?>
-
-    <?php // echo $form->field($model, 'password_reset_token') ?>
-
-    <?php // echo $form->field($model, 'auth_key') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'donvi_id') ?>
-
-    <?php // echo $form->field($model, 'trinhdo_id') ?>
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>

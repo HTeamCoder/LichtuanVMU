@@ -1,8 +1,7 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $model common\models\nhanvien */
 
@@ -24,27 +23,60 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+    <?php Pjax::begin(); ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'ten',
-            'ngaysinh',
-            'gioitinh',
+            [
+                'attribute'=>'ngaysinh',
+                'value'=>date('d-m-Y',strtotime($model->ngaysinh)),
+            ],
+            [
+                'attribute'=>'gioitinh',
+                'value'=>($model->gioitinh != 'nu')?'Nam':'Nữ',
+            ],
             'ngach',
             'hesoluong',
-            'ghichu',
-            'username',
-            'password_hash',
-            'password_reset_token',
-            'auth_key',
-            'status',
-            'created_at',
-            'updated_at',
-            'donvi_id',
-            'trinhdo_id',
+            [
+                'attribute'=>'ghichu',
+                'value'=>($model->ghichu != null)?$model->ghichu:'',
+            ],
+            [
+                'attribute'=>'donvi_id',
+                'value'=>$model->donvi->tendonvi,
+            ],
+            [
+                'attribute'=>'trinhdo_id',
+                'value'=>$model->trinhdo->tentrinhdo,
+            ],
         ],
     ]) ?>
-
+    <?php 
+        if ((Yii::$app->user->identity->roles == 'admin'|| Yii::$app->user->identity->username == $model->username)&& !is_null($model->username))
+            {
+                echo 
+                DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    [
+                        'attribute'=>'username',
+                        'value'=>$model->username,
+                    ],
+                    [
+                        'attribute'=>'password',
+                        'label'=>'Mật khẩu',
+                        'value'=>$model->username
+                    ],
+                    [
+                        'attribute'=>'roles',
+                        'label'=>'Vai trò',
+                        'value'=>$model->roles
+                    ],
+                ],
+            ]);
+            }
+    ?>
+    <?php Pjax::end(); ?>
 </div>

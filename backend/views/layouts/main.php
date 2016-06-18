@@ -28,32 +28,61 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'H - Team',
+        'brandLabel' => 'Dashboard VMU System',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Loại tin', 'url' => ['/loaitin/index']],
-        ['label' => 'Tin tức', 'url' => ['/tintuc/index']],
-        ['label' => 'Lịch tuần', 'url' => ['/sukien/index']],
-        ['label' => 'Cán bộ', 'url' => ['/nhanvien/index']],
-        ['label' => 'Thông báo', 'url' => ['/thongbao/index']],
-        ['label' => 'Slide', 'url' => ['/slide/index']],
-    ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+         $menuItems[] = '';
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link']
-            )
-            . Html::endForm()
-            . '</li>';
+        $menuItems = [
+        ['label' => 'Tổng quan', 'url' => ['/site/index']],
+        ['label' => 'Thông báo', 'url' => ['/tintuc/index']],
+        ['label' => 'Tuần công tác', 'url' => ['/tuan/index']],
+        // ['label' => 'Lịch tuần', 'url' => ['/sukien/index']],
+        ['label' => 'Cán bộ', 'url' => ['/nhanvien/index']],
+    ];
+         $menuItems[] = ['label' => 'Danh mục', 'items'=>[
+            [
+                'label' => 'Tin tức',
+                'url' => ['/thongbao/index']
+            ],
+            [
+                'label' => 'Slide',
+                'url' => ['/slide/index']
+            ],
+            [
+                'label' => 'Sinh nhật',
+                'url' => ['/nhanvien/birthday']
+            ],
+            [
+                'label' => 'Sự kiện',
+                'url' => ['/countdown/index']
+            ],
+            [
+                'label' => 'Kho ảnh nền sinh nhật',
+                'url' => ['/khoanh/index']
+            ],
+        ]
+        ];
+        if (Yii::$app->user->identity->roles == 'admin' || Yii::$app->user->identity->roles == 'manager')
+        $menuItems[] = ['label' => 'Thành viên', 'url' => ['/nhanvien/member']];
+        $menuItems[] = ['label' => Yii::$app->user->identity->ten, 'items'=>[
+            [
+                'label' => 'Đổi mật khẩu',
+                'url' => ['/nhanvien/changepassword']
+            ],
+            [
+                'label' => 'Đăng xuất',
+                'url' => ['/site/logout'],
+                'linkOptions' => ['data-method' => 'post']
+            ],
+        ]
+
+        ];
+      
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
@@ -80,6 +109,17 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<script>
+function complete() {
+       $('#thongbao').html('Welcome to Infoboard Vimaru System');
+    }
+</script>
+<script>
+  var soons = document.querySelectorAll('.soon');
+  for(var i=0;i<soons.length;i++) {
+      Soon.create(soons[i]);
+  }
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
