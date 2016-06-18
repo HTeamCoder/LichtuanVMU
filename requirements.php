@@ -1,4 +1,5 @@
 <?php
+set_time_limit(200);
 /**
  * Application requirement checker script.
  *

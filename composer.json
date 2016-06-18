@@ -21,7 +21,12 @@
         "mihaildev/yii2-ckeditor": "*",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "moonlandsoft/yii2-phpexcel": "*",
-        "kartik-v/yii2-widget-datetimepicker": "*"
+        "2amigos/yii2-date-picker-widget": "~1.0",
+        "2amigos/yii2-date-time-picker-widget": "~1.0",
+        "tuyakhov/yii2-youtube": "*",
+        "kartik-v/yii2-widget-datetimepicker": "*",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "2amigos/yii2-ckeditor-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
@@ -32,7 +37,7 @@
     "config": {
         "process-timeout": 1800,
         "github-oauth": {
-            "github.com": "8b4a5533fdd43a30044259e0472bac0b3850c0d0"
+            "github.com": "1c9189570769140145c4c8021415bbf849619610"
         }
     },
     "extra": {
@@ -41,4 +46,5 @@
             "bower-asset-library": "vendor/bower"
         }
     }
+    
 }
