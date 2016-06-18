@@ -23,14 +23,16 @@ class AppAsset extends AssetBundle
         'css/theme.css',
         'css/portfolio-item.css',
         'css/style.css',
-        'css/sliderengine/amazingslider-1.css',
+        'css/flipclock.css'
     ];
     public $js = [
-        'js/jquery.tickerNews.min.js',
-        'js/jquery.vticker-min.js',
-        'js/sliderengine/amazingslider.js',
-        'js/sliderengine/initslider-1.js',
         'js/bootstrap.min.js',
+        'js/my.js',
+        'js/jquery.cycle2.js',
+        'js/jquery.cycle2.caption2.min.js',
+        'js/jquery.tickerNews.min.js',
+        'js/flipclock.js',
+        'js/jquery.marquee.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -1,337 +1,98 @@
 <?php
-
+use yii\widgets\Pjax;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
-
-$this->title = 'Bảng tin điện tử VMU';
+$this->title = 'Bảng thông tin điện tử VMU';
 ?>
   <div class="content">
+         <?php if ($thongbaos != null ): ?>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-header"> 
-                    <div class="sibling">THÔNG BÁO</div>                   
+            <div class="col-lg-12 .col-4k-12 .col-fhd-12 .col-xlg-12">
+                <div class="page-header">    
                     <div class="TickerNews theme5" id="T5">
                           <div class="ti_wrapper">
+                          <div id="clock" class="text-center sibling"></div>
                             <div class="ti_slide">
                               <div class="ti_content">
-                                <div class="ti_news"><li><a href="#">Thông báo lịch thi kỳ thi phụ tháng 04/2016</a></li></div>
-                                <div class="ti_news"><li><a href="#">Thông báo danh sách SV đăng ký không hợp lệ kỳ thi phụ tháng 04/2016</a></li></div>
-                                <div class="ti_news"><li><a href="#">Kết quả thi Olympic cấp trường năm 2016 và lịch ôn tập thi cấp quốc gia</a></li></div>
-                                <div class="ti_news"><li><a href="#">Danh sách chính thức cảnh báo học tập kì I năm học 2015 - 2016</a></li></div>
-                                <div class="ti_news"><li><a href="#">Quy định danh mục chứng chỉ tiếng Anh quốc tế công nhận chuẩn đầu ra</a></li></div>
+                                <?php foreach($thongbaos as $thongbao): ?>
+                                     <div class="ti_news"><li><a href="#" title="<?= $thongbao['noidung']; ?>"><?= $thongbao['noidung']; ?></a></li>
+                                    </div>
+                                <?php endforeach; ?>
                               </div>
                             </div>
                           </div>
                         </div>
-                    </div>
+                </div>
             </div>
         </div>
+         <?php endif; ?>
         <div class="row">
-            <div class="col-md-12" >
+            <div class="col-md-12 .col-4k-12 .col-fhd-12 .col-xlg-12" >
                 <div id="myCarousel" class="carousel slide carousel-fade">
                     <div class="carousel-inner">
-                        <div class=" item" data-interval="3000">
-                             <div class="col-md-12">
-                                 <div class="field-item even">
-                                 <p style="text-align: justify;font-size:17px;font-weight: bold;">Sáng ngày 2/4/2016, tại Sân vận động, Trường Đại học Hàng hải Việt Nam long trọng tổ chức Lễ kỷ niệm 60 năm ngày thành lập và đón nhận danh hiệu Anh hùng lực lượng vũ trang nhân dân.</p>
-                                <p style="text-align: center;"><img alt="" src="http://www.vimaru.edu.vn/sites/default/files/u648/IMG_5499.JPG" style="width: 500px; height: 300px;"></p>
-                                 <p style="text-align: justify;font-size: 17px;">Dự buổi lễ có Đồng chí Đinh La Thăng, Ủy viên Bộ Chính trị, Bí thư Thành ủy TP Hồ Chí Minh, Bộ trưởng Bộ GTVT; Đồng chí Trương Quang Nghĩa, Ủy viên Trung ương Đảng, Phó trưởng Ban Kinh tế Trung ương; Đồng chí Bùi Văn Cường, Bí thư Đảng ủy khối doanh nghiệp Trung ương; Đồng chí Phạm Mạnh Hùng- Thứ trưởng Bộ Giáo dục đào tạo; Đồng chí Nguyễn Văn Công- Thứ trưởng Bộ GTVT, Đồng chí Nguyễn Nhật- Thứ trưởng Bộ GTVT các đồng chí đại diện cho Đại sứ quán các nước, đại diện cho các tập đoàn kinh tế, các tổng công ty, các công ty, các trường đại học cao đẳng trong và ngoài TP Hải Phòng; các thế hệ lãnh đạo Nhà trường, các thế hệ Thầy (Cô) giáo, các cựu sinh viên; các đồng chí thuộc Đài phát thanh và truyền hình Trung ương và Hải Phòng, các nhà báo của các báo Trung ương và địa phương có mặt đưa tin sự kiện quan trọng này của Nhà trường.</p><p style="text-align: justify;font-size: 17px;">Về phía Trường Đại học Hàng hải Việt Nam có NGND.PGS.TS. Lương Công Nhớ- Bí thư Đảng ủy, Hiệu trưởng, các đồng chí trong Đảng ủy, Ban Giám hiệu, Công đoàn, Đoàn Thanh niên, Thủ trưởng các đơn vị, toàn thể các CB, GV, CNV và sinh viên tham dự.</p></div>
-                             </div>
+                        <div class="active item" data-interval="<?= ($lichtuans != null)?$lichtuans->thoigianhienthi:'60000' ?>" id="lichtuancongtac" status="0">
+                            <?php if ($lichtuans != null){
+                                  echo $lichtuans->sukien;
+                              } ?>     
                         </div>
-                        <div class="item" data-interval="10000">
-                            <img src="img/hpbd.png" alt="" style="width: 100%;" class="img-responsive" id="pic-hpbd">
-                            <p class="canbo">Hôm nay là sinh nhật của H-Team</p>
-                            <p class="lead text-center">CHÚC MỪNG SINH NHẬT</p>
-                        </div>
-                        <div class=" item" data-interval="10000">
-                            <div id="amazingslider-wrapper-1" style="display:block;position:relative;max-width:765px;margin:0px auto 104px;">
-                                <div id="amazingslider-1" style="display:block;position:relative;margin:0 auto;">
-                                    <ul class="amazingslider-slides" style="display:none;">
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/1.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/2.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/3.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/4.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/5.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/6.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/7.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/8.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/9.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/10.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                    </ul>
-                                    <ul class="amazingslider-thumbnails" style="display:none;">
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/1.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/2.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/3.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/4.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/5.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/6.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/7.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/8.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/9.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                        <li><img src="<?= Yii::$app->request->baseUrl;?>/img/10.jpg" alt="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân."  title="Chủ đề :Lễ kỉ niệm 60 năm ngày thành lập Trường ĐHHHVN và đón nhận danh hiệu anh hùng lực lượng vũ trang nhân dân." />
-                                        </li>
-                                    </ul>
-                                </div>
+
+                        <div class="item" data-interval="<?= ($countdown != null)?$countdown['thoigianhienthi']:'60000' ?>" id="sukien">
+                            
+                            <div class="event" data-time="<?= ($countdown!=null)?$countdown['thoigiandienra']:''; ?>" ma="">
+                                <div id="thongbao" style="font-size:30px;"><?= ($countdown!=null)?$countdown['tieude']:''; ?></div>
+                                <div class="clock"></div>
                             </div>
+                
                         </div>
-                        <div class="active item" data-interval="10000">
-                            <div class="lichtuan">
-                                <p class="lead text-center" style="padding:5px 0;margin: 0;">Thứ 4 - 18/4/2016</p>
-                                <hr>   
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i>8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Khai giảng Lớp SQQL K41.</li>
-                                        <li><strong>Chủ trì:</strong>Hiệu trưởng.</li>
-                                        <li><strong>Kính mời:</strong>Các đại biểu có giấy mời riêng.</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i>8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Khai giảng Lớp SQQL K41.</li>
-                                        <li><strong>Chủ trì:</strong>Hiệu trưởng.</li>
-                                        <li><strong>Kính mời:</strong>Các đại biểu có giấy mời riêng.</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i>8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Khai giảng Lớp SQQL K41.</li>
-                                        <li><strong>Chủ trì:</strong>Hiệu trưởng.</li>
-                                        <li><strong>Kính mời:</strong>Các đại biểu có giấy mời riêng.</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i>8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Khai giảng Lớp SQQL K41.</li>
-                                        <li><strong>Chủ trì:</strong>Hiệu trưởng.</li>
-                                        <li><strong>Kính mời:</strong>Các đại biểu có giấy mời riêng.</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Hội thảo Quy hoạch phát triển hệ thống cảng biển và cảng cạn VN.</li>
-                                        <li><strong>Chủ trì:</strong>Trường ĐH Hàng hải VN và Cục Hàng hải VN.</li>
-                                        <li><strong>Kính mời:</strong>Đại diện lãnh đạo: Trường ĐH Hàng hải VN, Cục Hàng hải VN; Đại diện các đơn vị thuộc ngành Hàng hải (do Cục Hàng hải VN mời); Đại diện các Khoa/Viện trong toàn trường; Báo cáo viên; Cán bộ Giảng viên Khoa Kinh tế, Công trình và các Cán bộ Giảng viên, Học viên, Sinh viên có quan tâm.</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 item-lichtuan">
-                                    <ul class="block-lichtuan">
-                                        <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                                        <li><strong>Tại phòng họp giao ban: </strong>Hội thảo Quy hoạch phát triển hệ thống cảng biển và cảng cạn VN.</li>
-                                        <li><strong>Chủ trì:</strong>Trường ĐH Hàng hải VN và Cục Hàng hải VN.</li>
-                                        <li><strong>Kính mời:</strong>Đại diện lãnh đạo: Trường ĐH Hàng hải VN, Cục Hàng hải VN; Đại diện các đơn vị thuộc ngành Hàng hải (do Cục Hàng hải VN mời); Đại diện các Khoa/Viện trong toàn trường; Báo cáo viên; Cán bộ Giảng viên Khoa Kinh tế, Công trình và các Cán bộ Giảng viên, Học viên, Sinh viên có quan tâm.</li>
-                                    </ul>
-                                </div>
+                        <div class="item" data-interval="<?= ($tintucs!=null)?$tintucs['thoigianhienthi']:'60000'; ?>" id="tintuc" status="0">
+                           
+                             <p class="text-center lead" id="tieude">
+                             <?php 
+                                echo $tintucs['tieude'];
+                              ?>
+                            </p>
+                            <div id="noidung" class="marquee-vert" data-gap=0 data-direction="up" data-duplicated="true" data-speed="40000" >
+                              <?=
+                                  ($tintucs['noidung']);
+                              ?>
                             </div>
+                           
+                        </div>
+                         <div class="item" data-interval="<?= ($slide!=null)?$slide['thoigianhienthi']:'60000'; ?>" id="slide">
+                           
+    			                  <div class="cycle-slideshow" data-cycle-fx="fade" data-cycle-caption-plugin="caption2"
+                              data-cycle-overlay-fx-sel=">div" data-cycle-timeout=5000 id="slideshow"
+                            >
+                                <div class="cycle-overlay" style="display: block;" data-cycle-fx="fade">Redwoods Muir Woods National Monument</div>
+                            <?php
+                                if($slide != null)
+                                foreach($slide->hinhanhs as $hinhanh)
+                                {
+                                  echo '<img src="'.Yii::$app->urlManagerFrontend->baseUrl.'/'.$hinhanh['path'].'" data-cycle-title="" data-cycle-desc="'.$slide['tieude'].'" class="cycle-slide cycle-slide-active">';
+                                }
+                            ?> 
+                          </div>
+                       
+                        </div>
+                        <div class="item" data-interval="<?= ($sinhnhats!=null)?$sinhnhats['thoigianhienthi']:'60000'; ?>" id="sinhnhat">
+                                <div class="col-md-6">
+                                  <img src="<?= Yii::$app->request->baseUrl; ?>/img/hpbd.png" alt="" style="width: 100%;position:relative;" id="pic-hpbd">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thongtinsinhnhat">
+                                    <p class="text-center canbo">Chúc Mừng Sinh Nhật</p>
+                                    <div class="lead text-center ten">
+                                      <?php if ($sinhnhats != null): ?>
+                                          <?php foreach($sinhnhats as $sinhnhat): ?>
+                                              <?= ($sinhnhat['ten']!='')?'<p>'.$sinhnhat['ten'].'('.$sinhnhat['tuoi'].' tuổi)'.'-'.$sinhnhat['donvi'].'</p>':''; ?>
+                                          <?php endforeach; ?>
+                                      <?php endif; ?>
+                                    </div>       
+                                </div>
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4">
-                <div id="tab-lichtuan">LỊCH TUẦN CÔNG TÁC</div>
-                <div id="lichtuan">
-                  <ul>
-                    <li>
-                        <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 2 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Khai giảng Lớp SQQL K41.</li>
-                            <li><strong>Chủ trì:</strong>Hiệu trưởng.</li>
-                            <li><strong>Kính mời:</strong>Các đại biểu có giấy mời riêng.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp kiểm tra, rà soát công tác trông giữ xe và ANTT của nhà trường.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Lê Quốc Tiến.</li>
-                            <li><strong>Kính mời:</strong>Đại diện các phòng: QT-TB, HCTH, KH-TC; Các đ/c Thinh, Tùng (Ban BV) chuẩn bị báo cáo.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 5 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Gặp gỡ cử tri sinh viên nội trú KTX khu C.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Phạm Xuân Dương.</li>
-                            <li><strong>Kính mời:</strong>Đ/C Đoàn (TCCB), CTSV, ĐTN, HSV; toàn bộ cử tri tại KTX khu C.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 6 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Kiểm tra Chi bộ Phòng Đào tạo về việc thực hiện Chương trình hành động thực hiện Nghị quyết 29-NQ/TW và Nghị quyết 34-NQ/BCSĐ, Chỉ thị 03/CT-TW của Bộ chính trị.</li>
-                            <li><strong>Chủ trì:</strong>Bí thư Đảng ủy.</li>
-                            <li><strong>Kính mời:</strong>Ban Thường trực Đảng ủy, VPĐU; UBKT Đảng ủy; Trưởng các phòng: Thanh tra, KT&ĐBCL; toàn bộ Đảng viên Phòng Đào tạo.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 7 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp rà soát và xây dựng phương án để tăng cường hiệu quả công tác mua sắm trang thiết bị cơ sở vật chất hàng năm.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Lê Quốc Tiến.</li>
-                            <li><strong>Kính mời:</strong>Đại diện các phòng: QT-TB, HCTH, KH-TC; Ban BV;</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban :</strong>Đại diện Ban LĐSX làm việc với Trung tâm CITAD nhằm tăng cường hiệu quả sử dụng cơ sở vật chất và hoạt động của Trung tâm.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Lê Quốc Tiến.</li>
-                            <li><strong>Kính mời:</strong>Đại diện: TT CITAD, TT Quản trị mạng; QT-TB, HCTH, KH-TC; Ban BV; Khoa CNTT.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 6 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Gặp gỡ cử tri sinh viên nội trú KTX Quán Nam. </li>
-                            <li><strong>Chủ trì:</strong>PHT. Phạm Xuân Dương.</li>
-                            <li><strong>Kính mời:</strong>: Đ/c Đoàn (TCCB), CTSV, ĐTN, HSV; toàn bộ cử tri tại KTX Quán Nam</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Hội thảo Quy hoạch phát triển hệ thống cảng biển và cảng cạn VN.</li>
-                            <li><strong>Chủ trì:</strong>Trường ĐH Hàng hải VN và Cục Hàng hải VN.</li>
-                            <li><strong>Kính mời:</strong>Đại diện lãnh đạo: Trường ĐH Hàng hải VN, Cục Hàng hải VN; Đại diện các đơn vị thuộc ngành Hàng hải (do Cục Hàng hải VN mời); Đại diện các Khoa/Viện trong toàn trường; Báo cáo viên; Cán bộ Giảng viên Khoa Kinh tế, Công trình và các Cán bộ Giảng viên, Học viên, Sinh viên có quan tâm.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 2 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong> Hội nghị Ban Thường vụ Đảng ủy.</li>
-                            <li><strong>Chủ trì:</strong>Bí thư Đảng ủy.</li>
-                            <li><strong>Kính mời:</strong>Các đồng chí Ủy viên Ban Thường vụ Đảng ủy.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Khai mạc lớp bồi dưỡng Đảng viên mới.</li>
-                            <li><strong>Chủ trì:</strong>Đ/c Hoàng Văn Thủy - Phó Bí thư Đảng ủy.</li>
-                            <li><strong>Kính mời:</strong>Ban thường vụ Đảng ủy, các học viên theo Công văn triệu tập của Đảng ủy.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Lễ khai mạc Vòng thi Quốc gia Kỳ thi Vô địch Tin học văn phòng thế giới 2016.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Phạm Xuân Dương và lãnh đạo IIG Việt Nam.</li>
-                            <li><strong>Kính mời:</strong>Đảng ủy, BGH; ĐTN, HSV; phòng ĐT, CTSV, CITAD; lãnh đạo các Khoa/Viện có sinh viên.</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 5 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 6 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 7 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Chủ Nhật - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 2 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i> - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 5 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 6 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                    <li>
-                         <ul class="block-lichtuan">
-                            <li><strong>Thời gian :</strong><i>Thứ 7 - 18/4/2016 - 8h00</i></li>
-                            <li><strong>Tại phòng họp giao ban: </strong>Họp triển khai xây dựng nội dung ôn tập, câu hỏi phỏng vấn và đáp án cho Cục Kiểm ngư.</li>
-                            <li><strong>Chủ trì:</strong>PHT. Đinh Xuân Mạnh.</li>
-                            <li><strong>Kính mời:</strong>Chủ nhiệm các Khoa: Hàng hải, Máy tàu biển, đ/c Phước (TTHLTV).</li>
-                        </ul>
-                    </li>
-                  </ul>
-                </div>
-            </div> -->
         </div>
-        <hr>
     </div>

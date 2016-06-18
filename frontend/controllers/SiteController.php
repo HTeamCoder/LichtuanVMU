@@ -3,16 +3,21 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use common\models\thongbao;
+use common\models\video;
+use common\models\slide;
+use common\models\sinhnhat;
+use common\models\tintuc;
+use common\models\hinhanh;
+use common\models\countdown;
+use common\models\tuan;
+use common\models\nhanvien;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
+use yii\helpers\Json;
 /**
  * Site controller
  */
@@ -21,6 +26,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
+
     public function behaviors()
     {
         return [
@@ -72,7 +78,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $event = countdown::find(['dadienra'=>0])->all();
+        foreach($event as $key=>$val)
+        {
+            if (strtotime($val['thoigiandienra'])<time())
+            {
+                $sukien = countdown::findOne($val['id']);
+                $sukien->dadienra = 1;
+                $sukien->active = 'khonghienthi';
+                $sukien->update(false);
+            }
+        }
+        $thongbao = thongbao::findAll(['active'=>'hienthi']);
+        $slide = slide::findOne(['active'=>'hienthi']);
+        $lichtuans = tuan::find()->orderBy('id DESC')->one();
+        return $this->render('index',['thongbaos'=>$thongbao,'lichtuans'=>$lichtuans,'video'=>Json::decode($this->actionVideo()),'tintucs'=>Json::decode($this->actionTintuc()),
+            'slide'=>$slide,'countdown'=>Json::decode($this->actionSukien()),'sinhnhats'=>Json::decode($this->actionSinhnhat())]);
     }
 
     /**
@@ -108,106 +129,69 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    public function actionContact()
+    public function actionLichtuan()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
+        $lichtuan = tuan::find()->orderBy('id DESC')->one();
+        return Json::encode($lichtuan);
+    }
+    public function actionThongbao()
+    {
+        $thongbao = thongbao::findAll(['active'=>'hienthi']);
+        return Json::encode($thongbao);
+    }
+    public function actionVideo()
+    {
+        $video = video::find()->orderBy('id DESC')->one();
+        return Json::encode($video);
+    }
+    public function actionSlide()
+    {
+        $slides = slide::findOne(['active'=>'hienthi']);
+        foreach($slides->hinhanhs as $key=>$val)
+        {
+            $slide[$key]['tieude'] = $slides->tieude;
+            $slide[$key]['hinhanh'] = Yii::$app->urlManagerFrontend->baseUrl.'/'.$val->path;
+            $slide[$key]['thoigian'] = $slides->thoigianhienthi;
+            $slide[$key]['thoigianmoianh'] = $val->tocdohienthi;
         }
+        return Json::encode($slide);
     }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
+    public function actionTintuc()
     {
-        return $this->render('about');
+        $tintuc = tintuc::findOne(['active'=>'hienthi']);
+        return Json::encode($tintuc);
     }
-
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
+    public function actionSukien()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
+        if (isset($_POST['dataajax']))
+        {
+            $sukien = countdown::findOne($_POST['dataajax']);
+            $sukien->dadienra = 1;
+            $sukien->active = 'khonghienthi';
+            $sukien->update();
         }
+        $sukien = countdown::find()->where(['dadienra'=>0,'active'=>'hienthi'])->one();
+        if (!is_null($sukien))
+        $sukien->thoigiandienra = date('Y-m-d',strtotime($sukien->thoigiandienra)).' '.date('H:i:s',strtotime($sukien->thoigiandienra));
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        return Json::encode($sukien);
     }
-
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
-    public function actionRequestPasswordReset()
+    public function actionSinhnhat()
     {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+        $time = sinhnhat::find()->one();
+        $sinhnhat = nhanvien::find()->all();
+        foreach ($sinhnhat as $key => $value) {
+            if (date('d-m',time()) == date('d-m',strtotime($value['ngaysinh'])))
+            {
+                $canbo[$key]['ten'] = $value['ten'];
+                $canbo[$key]['gioitinh'] = $value['gioitinh'];
+                $canbo[$key]['trinhdo'] =$value['trinhdo']->tentrinhdo;
+                $canbo[$key]['donvi'] =$value['donvi']->tendonvi;
+                $canbo[$key]['ngaysinh'] =$value['ngaysinh'];
+                $canbo[$key]['tuoi'] = intval(date('Y',time()) - date('Y',strtotime($value['ngaysinh'])));
+                 $canbo['thoigianhienthi'] = $time->thoigianhienthi;
             }
         }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
+        return Json::encode((isset($canbo))?$canbo:null);
     }
 }
