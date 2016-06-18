@@ -9,6 +9,9 @@ body{
 .header{
 	margin-left: 100px;
 }
+.header img{
+	margin-left: 45%;
+}
 .top{
 	width: 100% !important;
 	background: url('../img/bg-banner.png');
