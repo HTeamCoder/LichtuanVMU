@@ -2,7 +2,9 @@ html,
 body {
     height: 100%;
 }
-
+td{
+    overflow:auto;
+}
 .wrap {
     min-height: 100%;
     height: auto;
