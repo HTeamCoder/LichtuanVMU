@@ -21,16 +21,16 @@ body{
 }
 .top #countdown img
 {
-	width: 30%;
+	width: 20%;
 	height: 120px;
 	-webkit-clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 	float: left;
-	margin-left: -7.5%;
+	margin-left: -5%;
 }
 .top #countdown img:first-child
 {
-	margin-left: 1%;
+	margin-left: 33%;
 }
 .top #countdown img.last-img
 {
@@ -48,6 +48,7 @@ body{
 	width: auto;
 	height: 100%;
 	margin: 0 10px;
+	transform: scale(1.5);
 }
 hr{
 	margin:5px 0;
