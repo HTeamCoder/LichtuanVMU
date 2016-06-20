@@ -121,19 +121,19 @@ class read{
         return '
         <div class="container" id="main">
                 <div class="row" id="header" style="position:static;z-index:9999;">
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                        <div style="border: 1px solid; border-top-left-radius: 5px; border-top-right-radius: 5px">
+                    <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3 col-xlg-3 col-4k-3 col-fhd-3 col-uhd-3">
+                        <div style="border: 1px solid; border-top-left-radius: 5px; border-top-right-radius: 5px;" class="tuancuanam">
                             <strong style="padding-left: 5px">
                                 TUẦN <span style="font-size: 24pt">'.$sttTuan.'</span> THEO NĂM  '.date("Y").'
                             </strong>
                         </div>
-                        <div style="border: 1px solid; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px">
+                        <div style="border: 1px solid; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;" class="tuancuanam">
                             <strong style="padding-left: 5px">
                                 TUẦN <span style="font-size: 24pt">42</span> THEO NĂM HỌC 2015-2016
                             </strong>
                         </div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-7 col-lg-7 col-xlg-7 col-4k-7 col-fhd-7 col-uhd-">
                         <div id="slogan" style="text-align: center; font-family: Times New Roman;font-weight: bold;">
                             TRƯỜNG ĐẠI HỌC HÀNG HẢI VIỆT NAM<br/>
                             LỊCH CÔNG TÁC
@@ -143,9 +143,9 @@ class read{
                         </div>
 
                     </div>
-                    <div class="col-md-2">
-                        <div style="text-align: center;">
-                            <img src="img/iso9001.png" class="img-responsive">
+                    <div class="col-md-2 col-lg-2 col-xlg-2 col-4k-2 col-fhd-2 col-uhd-2">
+                        <div>
+                            <img src="img/iso9001.png" class="img-responsive" style="float:right; margin-right: 6%">
                         </div>
                     </div>
                 </div>

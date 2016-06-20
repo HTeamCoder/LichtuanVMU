@@ -148,7 +148,7 @@ $(document).ready(function(){
             {
                     $('.marquee-vert').marquee({
                     direction: 'up',
-                    speed: 20000,
+                    speed: 70000,
                     startVisible:true,
                   });
                 $('#lichtuancongtac').attr('status',0);
@@ -161,7 +161,7 @@ $(document).ready(function(){
                 }else{
                     $('.marquee-vert').marquee({
                     direction: 'up',
-                    speed: 20000,
+                    speed: 70000,
                     startVisible:true,
                   });
                 }
